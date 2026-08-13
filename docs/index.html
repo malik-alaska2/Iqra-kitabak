@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Kitob</title>
+<meta name="theme-color" content="#10201C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span class="brand__name">Kitob</span>
+  </div>
+  <button class="lang-chip" id="langBtn" aria-label="Language">RU</button>
+</header>
+
+<div class="searchbar">
+  <input id="q" type="search" autocomplete="off" enterkeyhint="search" placeholder="—">
+  <button id="goBtn" class="go" aria-label="Search">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 015.94 12.1l4.23 4.23-1.34 1.34-4.23-4.23A7.5 7.5 0 1110.5 3zm0 2a5.5 5.5 0 100 11 5.5 5.5 0 000-11z" fill="currentColor"/></svg>
+  </button>
+</div>
+
+<nav class="topics" id="topics"></nav>
+
+<main id="view">
+  <div class="state" id="state"></div>
+  <div class="list" id="list"></div>
+</main>
+
+<nav class="tabbar">
+  <button class="tab is-active" data-tab="search"><span class="tab__i">🔎</span><span class="tab__l" data-i18n="tab_search"></span></button>
+  <button class="tab" data-tab="saved"><span class="tab__i">⭐</span><span class="tab__l" data-i18n="tab_saved"></span></button>
+  <button class="tab" data-tab="offline"><span class="tab__i">📥</span><span class="tab__l" data-i18n="tab_offline"></span></button>
+</nav>
+
+<!-- Карточка книги -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet__panel" role="dialog" aria-modal="true">
+    <button class="sheet__close" id="sheetClose" aria-label="Close">✕</button>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+
+<!-- Читалка для TXT -->
+<div class="reader" id="reader" hidden>
+  <div class="reader__bar">
+    <button id="readerClose" class="reader__btn">✕</button>
+    <span class="reader__title" id="readerTitle"></span>
+    <button id="fontMinus" class="reader__btn">A−</button>
+    <button id="fontPlus" class="reader__btn">A+</button>
+  </div>
+  <article class="reader__page" id="readerPage"></article>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<!-- Выбор языка -->
+<div class="sheet" id="langSheet" hidden>
+  <div class="sheet__panel sheet__panel--short" role="dialog" aria-modal="true">
+    <h2 class="sheet__h" data-i18n="choose_lang"></h2>
+    <div class="langs">
+      <button data-lang="uz">🇺🇿 O‘zbekcha</button>
+      <button data-lang="ru">🇷🇺 Русский</button>
+      <button data-lang="ar">🇸🇦 العربية</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
