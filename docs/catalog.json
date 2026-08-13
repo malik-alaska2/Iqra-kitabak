@@ -1,0 +1,17 @@
+{
+  "_readme": "Собственный каталог. Сюда добавляйте книги, на публикацию которых у вас есть право (ваши издания, общественное достояние, разрешённые вакфы). Ищется по title, author и tags. Каталог показывается первым в результатах поиска.",
+  "_template": {
+    "id": "unique-id",
+    "title": "Название книги",
+    "author": "Автор",
+    "year": "1998",
+    "tags": ["fiqh", "hanafi", "фикх", "ханафи"],
+    "cover": "https://.../cover.jpg",
+    "page": "https://.../book-page",
+    "files": [
+      { "fmt": "pdf", "label": "PDF", "url": "https://.../book.pdf", "size": 0, "quality": "orig" },
+      { "fmt": "epub", "label": "EPUB", "url": "https://.../book.epub", "size": 0, "quality": "orig" }
+    ]
+  },
+  "books": []
+}
