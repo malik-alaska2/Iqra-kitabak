@@ -1,0 +1,21 @@
+# Автоматический деплой на Render (бесплатный план).
+# Render прочитает этот файл при подключении репозитория:
+# New → Blueprint → выберите репозиторий → задайте переменную BOT_TOKEN.
+services:
+  - type: worker
+    name: kitob-bot
+    runtime: docker
+    dockerfilePath: ./bot/Dockerfile
+    dockerContext: .
+    plan: free
+    envVars:
+      - key: BOT_TOKEN
+        sync: false          # значение вводите в панели Render, не в репозитории
+      - key: WEBAPP_URL
+        sync: false
+      - key: DB_PATH
+        value: /data/kitob.sqlite3
+    disk:
+      name: kitob-data
+      mountPath: /data
+      sizeGB: 1
