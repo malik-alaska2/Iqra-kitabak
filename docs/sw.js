@@ -1,6 +1,6 @@
 /* Кэш оболочки приложения: интерфейс открывается без интернета.
    Сами книги хранятся в IndexedDB (см. db.js). */
-const CACHE = 'kitob-shell-v1';
+const CACHE = 'kitob-shell-v2';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './i18n.js',
   './sources.js', './db.js', './catalog.json', './manifest.webmanifest',
@@ -25,11 +25,14 @@ self.addEventListener('fetch', (e) => {
   // Запросы к источникам книг не кэшируем — только сеть.
   if (url.origin !== self.location.origin && !url.host.includes('fonts.')) return;
 
+  // network-first: сначала сеть, кэш — только запасной вариант офлайн.
+  // При cache-first браузер навсегда отдавал бы первую загруженную версию
+  // и обновления сайта не доходили бы до пользователей.
   e.respondWith(
-    caches.match(e.request).then((hit) => hit || fetch(e.request).then((res) => {
+    fetch(e.request).then((res) => {
       const copy = res.clone();
       caches.open(CACHE).then((c) => c.put(e.request, copy)).catch(() => {});
       return res;
-    }).catch(() => caches.match('./index.html')))
+    }).catch(() => caches.match(e.request).then((hit) => hit || caches.match('./index.html')))
   );
 });
