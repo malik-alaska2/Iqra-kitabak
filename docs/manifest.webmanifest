@@ -1,0 +1,13 @@
+{
+  "name": "Kitob — kutubxona",
+  "short_name": "Kitob",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0E1C19",
+  "theme_color": "#10201C",
+  "lang": "ru",
+  "dir": "auto",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
