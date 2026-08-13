@@ -1,0 +1,54 @@
+# ЗАПАСНОЙ вариант: бот работает прямо в GitHub Actions.
+# Один запуск живёт максимум ~6 часов, поэтому job перезапускается по расписанию.
+# Между перезапусками бот 1–2 минуты недоступен, а база (избранное, «мои книги»)
+# сохраняется в артефакте — это компромисс, не полноценный хостинг.
+# Для постоянной работы лучше бесплатный контейнер (Koyeb / Render / Fly.io) — см. README.
+name: Run bot (fallback)
+
+on:
+  workflow_dispatch:
+  # Расписание отключено: без секрета BOT_TOKEN запуск падал бы каждые 5 часов.
+  # Чтобы включить — добавьте секрет в Settings > Secrets and variables > Actions,
+  # затем раскомментируйте две строки ниже.
+  # schedule:
+  #   - cron: "0 */5 * * *"
+
+concurrency:
+  group: kitob-bot
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r bot/requirements.txt
+
+      - name: Restore database
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: kitob-db
+          path: data
+
+      - name: Start bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          WEBAPP_URL: ${{ vars.WEBAPP_URL }}
+          DB_PATH: data/kitob.sqlite3
+        run: timeout 20400 python bot/main.py || true
+
+      - name: Save database
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitob-db
+          path: data/kitob.sqlite3
+          overwrite: true
+          retention-days: 30
