@@ -1,10 +1,15 @@
 /* Кэш оболочки приложения: интерфейс открывается без интернета.
    Сами книги хранятся в IndexedDB (см. db.js). */
-const CACHE = 'kitob-shell-v2';
+const CACHE = 'kitob-shell-v5';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './i18n.js',
-  './sources.js', './db.js', './catalog.json', './manifest.webmanifest',
+  './sources.js', './db.js', './reader.js', './booklink.js',
+  './catalog.json', './manifest.webmanifest',
 ];
+/* Просмотрщик PDF (pdf.js) весит около полутора мегабайт, поэтому в SHELL его
+   нет: заранее качать его тем, кто читает только TXT и EPUB, незачем.
+   Он лежит на том же домене, значит обработчик fetch ниже положит его в кэш
+   при первом открытии PDF — после этого книга открывается и без интернета. */
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

@@ -55,11 +55,12 @@ export const files = {
   },
 };
 
-/** Скачать файл в хранилище. Возвращает запись или бросает ошибку. */
-export async function downloadToLibrary(key, url, meta) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const blob = await res.blob();
-  await files.put(key, { ...meta, url, size: blob.size, type: blob.type }, blob);
-  return { key, ...meta, url, size: blob.size, blob };
+/** Положить готовый файл в хранилище. Возвращает запись.
+ *
+ * Скачиванием занимается вызывающая сторона: у разных источников оно разное —
+ * Викитека, например, отдаёт текст внутри JSON, а не файлом.
+ */
+export async function saveToLibrary(key, blob, meta) {
+  await files.put(key, { ...meta, size: blob.size, type: blob.type }, blob);
+  return { key, ...meta, size: blob.size, blob };
 }

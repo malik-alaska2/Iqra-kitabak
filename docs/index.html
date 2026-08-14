@@ -53,10 +53,12 @@
 <!-- Читалка для TXT -->
 <div class="reader" id="reader" hidden>
   <div class="reader__bar">
-    <button id="readerClose" class="reader__btn">✕</button>
+    <button id="readerClose" class="reader__btn" aria-label="Close">✕</button>
     <span class="reader__title" id="readerTitle"></span>
-    <button id="fontMinus" class="reader__btn">A−</button>
-    <button id="fontPlus" class="reader__btn">A+</button>
+    <span class="reader__note" id="readerNote"></span>
+    <button id="fontMinus" class="reader__btn" aria-label="Smaller">A−</button>
+    <button id="fontPlus" class="reader__btn" aria-label="Bigger">A+</button>
+    <button id="readerShare" class="reader__btn" aria-label="Share">↗</button>
   </div>
   <article class="reader__page" id="readerPage"></article>
 </div>
