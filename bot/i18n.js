@@ -1,0 +1,128 @@
+export const LANGS = ['uz', 'ru', 'ar'];
+
+export const T = {
+  uz: {
+    search_ph: 'Kitob nomi yoki muallif',
+    tab_search: 'Qidiruv', tab_saved: 'Saralangan', tab_offline: 'Yuklangan',
+    choose_lang: 'Tilni tanlang',
+    searching: 'Qidirilmoqda…',
+    empty_title: 'Kitob qidiring',
+    empty_text: 'Nom yoki muallifni yozing — ochiq manbalardan topamiz.',
+    nothing_title: 'Topilmadi',
+    nothing_text: 'Nomni boshqacha yozib ko‘ring yoki muallif ismini kiriting.',
+    error_title: 'Aloqa yo‘q',
+    error_text: 'Internetni tekshiring va qayta urinib ko‘ring. Yuklangan kitoblar offline ishlaydi.',
+    saved_empty_title: 'Saralanganlar bo‘sh',
+    saved_empty_text: 'Kitob kartasida «Saralanganga» tugmasini bosing.',
+    offline_empty_title: 'Yuklangan kitoblar yo‘q',
+    offline_empty_text: 'Kitobni yuklab oling — internetsiz ham ochiladi.',
+    versions: 'Nusxalar',
+    save: 'Saralanganga', saved: 'Saralangan', unsave: 'O‘chirish',
+    open_web: 'Manbada ochish',
+    downloading: 'Yuklanmoqda…',
+    downloaded: 'Yuklandi — offline mavjud',
+    dl_failed: 'Yuklab bo‘lmadi, manbada oching',
+    open: 'Ochish', share: 'Yuborish', remove: 'O‘chirish',
+    removed: 'O‘chirildi',
+    search_web: 'Google’da qidirish',
+    web_only: 'Manba saytida o‘qiladi',
+    send_to_chat: 'Telegram chatiga yuborish',
+    sent_to_chat: 'Botdan so‘radim — kitob chatga keladi',
+    send_unavailable: 'Chatga yuborish uchun ilovani bot menyusidagi «📱 Ilova» tugmasidan oching',
+    opening: 'Ochilmoqda…',
+    read_failed: 'Ochib bo‘lmadi — fayl orqali oching',
+    offline_tag: 'OFFLINE',
+    size_unknown: 'hajmi noma’lum',
+    topics: { quran: 'Qur’on va tafsir', hadith: 'Hadis', fiqh: 'Fiqh', aqidah: 'Aqida', seerah: 'Siyra' },
+  },
+  ru: {
+    search_ph: 'Название книги или автор',
+    tab_search: 'Поиск', tab_saved: 'Избранное', tab_offline: 'Скачано',
+    choose_lang: 'Выберите язык',
+    searching: 'Ищу…',
+    empty_title: 'Найдите книгу',
+    empty_text: 'Напишите название или автора — поищем в открытых источниках.',
+    nothing_title: 'Ничего не нашлось',
+    nothing_text: 'Попробуйте другое написание или имя автора.',
+    error_title: 'Нет связи',
+    error_text: 'Проверьте интернет и повторите. Скачанные книги работают офлайн.',
+    saved_empty_title: 'Избранное пусто',
+    saved_empty_text: 'Нажмите «В избранное» в карточке книги.',
+    offline_empty_title: 'Нет скачанных книг',
+    offline_empty_text: 'Скачайте книгу — она откроется без интернета.',
+    versions: 'Версии',
+    save: 'В избранное', saved: 'В избранном', unsave: 'Убрать',
+    open_web: 'Открыть источник',
+    downloading: 'Скачиваю…',
+    downloaded: 'Скачано — доступно офлайн',
+    dl_failed: 'Не удалось скачать, откройте источник',
+    open: 'Открыть', share: 'Отправить', remove: 'Удалить',
+    removed: 'Удалено',
+    search_web: 'Поискать в Google',
+    web_only: 'Читается на сайте источника',
+    send_to_chat: 'Прислать в чат Telegram',
+    sent_to_chat: 'Попросил бота — книга придёт в чат',
+    send_unavailable: 'Чтобы получать книги в чат, откройте приложение кнопкой «📱 Приложение» в боте',
+    opening: 'Открываю…',
+    read_failed: 'Не удалось открыть — попробуйте через «Поделиться»',
+    offline_tag: 'ОФЛАЙН',
+    size_unknown: 'размер неизвестен',
+    topics: { quran: 'Коран и тафсир', hadith: 'Хадисы', fiqh: 'Фикх', aqidah: 'Акыда', seerah: 'Сира' },
+  },
+  ar: {
+    search_ph: 'اسم الكتاب أو المؤلف',
+    tab_search: 'بحث', tab_saved: 'المفضلة', tab_offline: 'المحمّلة',
+    choose_lang: 'اختر اللغة',
+    searching: 'جارٍ البحث…',
+    empty_title: 'ابحث عن كتاب',
+    empty_text: 'اكتب الاسم أو المؤلف وسنبحث في المصادر المفتوحة.',
+    nothing_title: 'لا توجد نتائج',
+    nothing_text: 'جرّب كتابة الاسم بشكل آخر أو اسم المؤلف.',
+    error_title: 'لا يوجد اتصال',
+    error_text: 'تحقق من الإنترنت وأعد المحاولة. الكتب المحمّلة تعمل بدون إنترنت.',
+    saved_empty_title: 'المفضلة فارغة',
+    saved_empty_text: 'اضغط «إلى المفضلة» في بطاقة الكتاب.',
+    offline_empty_title: 'لا توجد كتب محمّلة',
+    offline_empty_text: 'حمّل كتابًا ليُفتح بدون إنترنت.',
+    versions: 'النسخ',
+    save: 'إلى المفضلة', saved: 'في المفضلة', unsave: 'إزالة',
+    open_web: 'فتح المصدر',
+    downloading: 'جارٍ التحميل…',
+    downloaded: 'تم التحميل — متاح بدون إنترنت',
+    dl_failed: 'تعذّر التحميل، افتح المصدر',
+    open: 'فتح', share: 'إرسال', remove: 'حذف',
+    removed: 'تم الحذف',
+    search_web: 'البحث في Google',
+    web_only: 'يُقرأ في موقع المصدر',
+    send_to_chat: 'إرسال إلى محادثة تيليجرام',
+    sent_to_chat: 'طلبت من البوت — سيصل الكتاب إلى المحادثة',
+    send_unavailable: 'لإرسال الكتب إلى المحادثة، افتح التطبيق من زر «📱 التطبيق» في البوت',
+    opening: 'جارٍ الفتح…',
+    read_failed: 'تعذّر الفتح — جرّب «إرسال»',
+    offline_tag: 'بدون إنترنت',
+    size_unknown: 'الحجم غير معروف',
+    topics: { quran: 'القرآن والتفسير', hadith: 'الحديث', fiqh: 'الفقه', aqidah: 'العقيدة', seerah: 'السيرة' },
+  },
+};
+
+/* Запросы для кнопок-разделов. Проверено на выдаче Internet Archive:
+   длинные фразы там склеиваются через AND по всему тексту и дают ноль
+   («hadis toplami», «сира пророк Мухаммад» — 0 результатов), поэтому
+   оставлены короткие слова, реально встречающиеся в названиях книг.
+   Для латиницы используются международные транслитерации: узбекских
+   изданий в Archive.org мало, английские подборки находятся надёжнее. */
+export const TOPIC_QUERIES = {
+  quran:  { ru: 'Коран тафсир', uz: 'tafsir', ar: 'تفسير القرآن' },
+  hadith: { ru: 'хадисы', uz: 'hadith', ar: 'الحديث' },
+  fiqh:   { ru: 'фикх', uz: 'fiqh', ar: 'الفقه' },
+  aqidah: { ru: 'акыда', uz: 'aqida', ar: 'العقيدة' },
+  seerah: { ru: 'жизнеописание Пророка Мухаммада', uz: 'seerah', ar: 'السيرة النبوية' },
+};
+
+export function detectLang() {
+  const saved = localStorage.getItem('kitob_lang');
+  if (LANGS.includes(saved)) return saved;
+  const tg = window.Telegram?.WebApp?.initDataUnsafe?.user?.language_code || navigator.language || 'ru';
+  const code = tg.slice(0, 2);
+  return LANGS.includes(code) ? code : 'ru';
+}

@@ -7,6 +7,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import html
+import json
 import logging
 import os
 import re
@@ -16,9 +17,9 @@ import aiohttp
 from aiogram import Bot, Dispatcher, F, Router
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.filters import Command, CommandStart
+from aiogram.filters import Command, CommandObject, CommandStart
 from aiogram.types import (BotCommand, CallbackQuery, FSInputFile, InlineKeyboardButton,
-                           InlineKeyboardMarkup, Message)
+                           InlineKeyboardMarkup, MenuButtonWebApp, Message, WebAppInfo)
 
 import keyboards as kb
 import sources
@@ -34,7 +35,23 @@ router = Router()
 MENU = menu_labels()
 
 
+BOT_USERNAME = ""
+
+
 # ----------------------------------------------------------------- утилиты
+def webapp_url_for(username: str | None) -> str:
+    """Адрес мини-приложения с именем бота в хэше.
+
+    Хэш не уходит на сервер, но доступен странице: по нему приложение строит
+    ссылку t.me/бот?start=..., когда книгу нужно прислать в чат, а отправить
+    данные напрямую нельзя (так бывает при запуске из кнопки меню).
+    """
+    url = settings.webapp_url
+    if not url or not username:
+        return url
+    return f"{url}#bot={username}"
+
+
 def book_key(book: dict, fmt: str = "") -> str:
     raw = f"{book.get('src')}:{book.get('id')}:{fmt}"
     return hashlib.md5(raw.encode()).hexdigest()[:12]
@@ -88,14 +105,20 @@ def render_card(lang: str, b: dict) -> str:
 
 # ------------------------------------------------------------------ /start
 @router.message(CommandStart())
-async def cmd_start(msg: Message):
+async def cmd_start(msg: Message, command: CommandObject | None = None):
     lang = await db.get_lang(msg.from_user.id)
     if not lang:
         guess = (msg.from_user.language_code or "ru")[:2]
         lang = guess if guess in LANGS else "ru"
         await db.set_lang(msg.from_user.id, lang)
         await msg.answer(t(lang, "choose_lang"), reply_markup=kb.lang_kb())
-    await msg.answer(t(lang, "start"), reply_markup=kb.main_menu(lang, settings.webapp_url))
+
+    # Ссылка вида t.me/бот?start=... — мини-приложение просит прислать книгу.
+    ref = (command.args or "").strip() if command else ""
+    if ref:
+        return await deliver_by_ref(msg, msg.from_user.id, lang, ref)
+
+    await msg.answer(t(lang, "start"), reply_markup=kb.main_menu(lang, webapp_url_for(BOT_USERNAME)))
     await msg.answer(t(lang, "presets"), reply_markup=kb.topics_kb(lang))
 
 
@@ -298,11 +321,28 @@ def safe_filename(title: str, fmt: str) -> str:
     return f"{name}.{fmt}"
 
 
-async def download_to_temp(url: str, max_bytes: int) -> tuple[str | None, int]:
+async def download_to_temp(url: str, max_bytes: int, via: str = "") -> tuple[str | None, int]:
     """Скачать файл во временный каталог. Возвращает (путь|None, размер)."""
     headers = {"User-Agent": "KitobBot/1.0"}
     timeout = aiohttp.ClientTimeout(total=settings.request_timeout)
     async with aiohttp.ClientSession(headers=headers, timeout=timeout) as session:
+        if via == "wikisource":
+            # Викитека отдаёт текст внутри JSON, а не файлом.
+            async with session.get(url) as r:
+                r.raise_for_status()
+                data = await r.json(content_type=None)
+            page = next(iter((data.get("query") or {}).get("pages", {}).values()), {})
+            text = (page.get("extract") or "").strip()
+            if not text:
+                return None, 0
+            body = text.encode("utf-8")
+            if len(body) > max_bytes:
+                return None, len(body)
+            fd, path = tempfile.mkstemp(prefix="kitob_")
+            with os.fdopen(fd, "wb") as fh:
+                fh.write(body)
+            return path, len(body)
+
         async with session.get(url, allow_redirects=True) as r:
             r.raise_for_status()
             declared = int(r.headers.get("Content-Length") or 0)
@@ -321,6 +361,58 @@ async def download_to_temp(url: str, max_bytes: int) -> tuple[str | None, int]:
             return path, size
 
 
+async def deliver_book(target: Message, user_id: int, lang: str, book: dict, file: dict) -> None:
+    """Скачать файл и отправить его в чат.
+
+    Общий путь для трёх входов: кнопки в самом боте, кнопки «отправить в чат»
+    в мини-приложении и ссылки-приглашения вида t.me/бот?start=...
+    """
+    url, fmt = file["url"], file["fmt"]
+    if not sources.is_allowed_file_url(url):
+        # Адрес приходит от клиента, поэтому доверять ему нельзя.
+        log.warning("отклонён адрес не из списка источников: %s", url)
+        return await target.answer(t(lang, "dl_error"))
+
+    caption = f"📚 <b>{esc(book['title'])}</b>" + (f"\n<i>{esc(book.get('author',''))}</i>" if book.get("author") else "")
+
+    # 1) файл уже загружался кем-то — отправляем мгновенно по file_id
+    cached = await db.file_cached(url)
+    if cached:
+        await target.answer_document(cached, caption=caption)
+        await db.lib_add(user_id, book_key(book, fmt), book["title"], fmt, cached)
+        return
+
+    wait = await target.answer(t(lang, "downloading"))
+    link_kb = InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text=t(lang, "open_link"), url=url)]])
+    max_bytes = settings.max_upload_mb * 1024 * 1024
+    try:
+        path, size = await download_to_temp(url, max_bytes, file.get("via", ""))
+    except Exception as e:
+        log.warning("download error %s: %s", url, e)
+        return await wait.edit_text(t(lang, "dl_error"), reply_markup=link_kb)
+
+    if not path:
+        return await wait.edit_text(
+            t(lang, "too_big", size=sources.human_size(size)), reply_markup=link_kb)
+
+    try:
+        doc = FSInputFile(path, filename=safe_filename(book["title"], fmt))
+        sent = await target.answer_document(doc, caption=caption)
+        file_id = sent.document.file_id
+        await db.file_cache_put(url, file_id, size)
+        await db.lib_add(user_id, book_key(book, fmt), book["title"], fmt, file_id)
+        await wait.edit_text(t(lang, "sent"))
+    except Exception as e:
+        log.warning("send error: %s", e)
+        await wait.edit_text(t(lang, "dl_error"), reply_markup=link_kb)
+    finally:
+        try:
+            os.unlink(path)
+        except OSError:
+            pass
+
+
 @router.callback_query(F.data.startswith("d:"))
 async def cb_download(cq: CallbackQuery):
     lang = await lang_of(cq.from_user.id)
@@ -330,57 +422,33 @@ async def cb_download(cq: CallbackQuery):
         return await cq.answer("⌛")
     _, books = data
     book = books[int(idx)]
-    file = book["files"][int(fi)]
-    url, fmt = file["url"], file["fmt"]
-    caption = f"📚 <b>{esc(book['title'])}</b>" + (f"\n<i>{esc(book.get('author',''))}</i>" if book.get("author") else "")
-
     await cq.answer()
+    await deliver_book(cq.message, cq.from_user.id, lang, book, book["files"][int(fi)])
 
-    # 1) файл уже загружался кем-то — отправляем мгновенно по file_id
-    cached = await db.file_cached(url)
-    if cached:
-        sent = await cq.message.answer_document(cached, caption=caption)
-        await db.lib_add(cq.from_user.id, book_key(book, fmt), book["title"], fmt, cached)
-        return
 
-    wait = await cq.message.answer(t(lang, "downloading"))
-    max_bytes = settings.max_upload_mb * 1024 * 1024
+# ------------------------------------------- книга, заказанная из мини-приложения
+async def deliver_by_ref(target: Message, user_id: int, lang: str, ref: str) -> None:
+    parsed = sources.decode_book_ref(ref)
+    if not parsed:
+        return await target.answer(t(lang, "book_gone"))
+    src, ident, index = parsed
+    book = await sources.fetch_book(src, ident)
+    if not book or index >= len(book.get("files") or []):
+        return await target.answer(t(lang, "book_gone"))
+    await deliver_book(target, user_id, lang, book, book["files"][index])
+
+
+@router.message(F.web_app_data)
+async def on_web_app_data(msg: Message):
+    """Мини-приложение, открытое кнопкой меню, просит прислать книгу в чат."""
+    lang = await lang_of(msg.from_user.id)
     try:
-        path, size = await download_to_temp(url, max_bytes)
-    except Exception as e:
-        log.warning("download error %s: %s", url, e)
-        return await wait.edit_text(
-            t(lang, "dl_error"),
-            reply_markup=InlineKeyboardMarkup(inline_keyboard=[[
-                InlineKeyboardButton(text=t(lang, "open_link"), url=url)]]),
-        )
-
-    if not path:
-        return await wait.edit_text(
-            t(lang, "too_big", size=sources.human_size(size)),
-            reply_markup=InlineKeyboardMarkup(inline_keyboard=[[
-                InlineKeyboardButton(text=t(lang, "open_link"), url=url)]]),
-        )
-
-    try:
-        doc = FSInputFile(path, filename=safe_filename(book["title"], fmt))
-        sent = await cq.message.answer_document(doc, caption=caption)
-        file_id = sent.document.file_id
-        await db.file_cache_put(url, file_id, size)
-        await db.lib_add(cq.from_user.id, book_key(book, fmt), book["title"], fmt, file_id)
-        await wait.edit_text(t(lang, "sent"))
-    except Exception as e:
-        log.warning("send error: %s", e)
-        await wait.edit_text(
-            t(lang, "dl_error"),
-            reply_markup=InlineKeyboardMarkup(inline_keyboard=[[
-                InlineKeyboardButton(text=t(lang, "open_link"), url=url)]]),
-        )
-    finally:
-        try:
-            os.unlink(path)
-        except OSError:
-            pass
+        payload = json.loads(msg.web_app_data.data)
+    except Exception:
+        return await msg.answer(t(lang, "book_gone"))
+    if payload.get("action") != "send" or not isinstance(payload.get("ref"), str):
+        return await msg.answer(t(lang, "book_gone"))
+    await deliver_by_ref(msg, msg.from_user.id, lang, payload["ref"])
 
 
 # --------------------------------------------------- текст: меню или запрос
@@ -400,7 +468,7 @@ async def on_text(msg: Message):
     if action == "help":
         return await msg.answer(t(lang, "help"))
     if action == "app":
-        return await msg.answer(t(lang, "start"), reply_markup=kb.main_menu(lang, settings.webapp_url))
+        return await msg.answer(t(lang, "start"), reply_markup=kb.main_menu(lang, webapp_url_for(BOT_USERNAME)))
 
     if len(msg.text.strip()) < 2:
         return await msg.answer(t(lang, "search_prompt"))
@@ -419,13 +487,35 @@ async def set_commands(bot: Bot) -> None:
     ])
 
 
+async def setup_menu_button(bot: Bot) -> None:
+    """Повесить мини-приложение на кнопку рядом с полем ввода.
+
+    Раньше это делалось руками в @BotFather. Делаем сами по двум причинам:
+    настройка не теряется при переносе бота, и в адрес попадает имя бота —
+    приложению оно нужно, чтобы построить ссылку «прислать книгу в чат».
+    """
+    if not settings.webapp_url:
+        return
+    try:
+        me = await bot.get_me()
+        await bot.set_chat_menu_button(
+            menu_button=MenuButtonWebApp(
+                text="Kitob", web_app=WebAppInfo(url=webapp_url_for(me.username))))
+        log.info("кнопка меню настроена на %s", webapp_url_for(me.username))
+    except Exception as e:
+        log.warning("не удалось настроить кнопку меню: %s", e)
+
+
 async def main() -> None:
     await db.init(settings.db_path)
     bot = Bot(settings.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
     dp.include_router(router)
     await set_commands(bot)
-    log.info("Kitob bot started. WebApp: %s", settings.webapp_url or "—")
+    await setup_menu_button(bot)
+    me = await bot.get_me()
+    globals()["BOT_USERNAME"] = me.username or ""
+    log.info("Kitob bot started as @%s. WebApp: %s", me.username, settings.webapp_url or "—")
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 

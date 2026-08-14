@@ -1,0 +1,679 @@
+{
+  "_readme": "Собственный каталог. Сюда добавляйте книги, на публикацию которых у вас есть право (ваши издания, общественное достояние, разрешённые вакфы). Ищется по title, author и tags; поле lang (ar/ru/uz) поднимает книгу, когда запрос набран на том же языке. Каталог показывается первым в результатах поиска. Ссылки на archive.org обязательно давайте через /cors/, а не /download/ — иначе браузер не сможет скачать файл в офлайн-библиотеку.",
+  "_template": {
+    "id": "unique-id",
+    "title": "Название книги",
+    "author": "Автор",
+    "year": "1998",
+    "tags": [
+      "fiqh",
+      "hanafi",
+      "фикх",
+      "ханафи"
+    ],
+    "cover": "https://.../cover.jpg",
+    "page": "https://.../book-page",
+    "files": [
+      {
+        "fmt": "pdf",
+        "label": "PDF",
+        "url": "https://.../book.pdf",
+        "size": 0,
+        "quality": "orig"
+      },
+      {
+        "fmt": "epub",
+        "label": "EPUB",
+        "url": "https://.../book.epub",
+        "size": 0,
+        "quality": "orig"
+      }
+    ],
+    "lang": "ru"
+  },
+  "books": [
+    {
+      "id": "sirat-ibn-hisham-ar",
+      "title": "السيرة النبوية لابن هشام",
+      "author": "ابن هشام",
+      "year": "",
+      "lang": "ar",
+      "tags": [
+        "sira",
+        "seerah",
+        "سيرة",
+        "السيرة النبوية",
+        "ابن هشام",
+        "сира",
+        "жизнеописание",
+        "siyra"
+      ],
+      "page": "https://archive.org/details/Sirat_Ibn_Hisham",
+      "cover": "https://archive.org/services/img/Sirat_Ibn_Hisham",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 1",
+          "url": "https://archive.org/cors/Sirat_Ibn_Hisham/01_94563_text.pdf",
+          "size": 10994857,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 2",
+          "url": "https://archive.org/cors/Sirat_Ibn_Hisham/02_94564_text.pdf",
+          "size": 10886812,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 3",
+          "url": "https://archive.org/cors/Sirat_Ibn_Hisham/03_94565_text.pdf",
+          "size": 9168196,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 4",
+          "url": "https://archive.org/cors/Sirat_Ibn_Hisham/04_94566_text.pdf",
+          "size": 9235533,
+          "quality": "scan"
+        }
+      ]
+    },
+    {
+      "id": "tafsir-tabari-ar",
+      "title": "جامع البيان عن تأويل آي القرآن — تفسير الطبري",
+      "author": "ابن جرير الطبري",
+      "year": "",
+      "lang": "ar",
+      "tags": [
+        "tafsir",
+        "quran",
+        "تفسير",
+        "القرآن",
+        "الطبري",
+        "тафсир",
+        "коран"
+      ],
+      "page": "https://archive.org/details/TafsirTabariShakir",
+      "cover": "https://archive.org/services/img/TafsirTabariShakir",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 1",
+          "url": "https://archive.org/cors/TafsirTabariShakir/taftab01_text.pdf",
+          "size": 16917573,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 4",
+          "url": "https://archive.org/cors/TafsirTabariShakir/taftab04_text.pdf",
+          "size": 16898811,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 5",
+          "url": "https://archive.org/cors/TafsirTabariShakir/taftab05_text.pdf",
+          "size": 17420076,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 10",
+          "url": "https://archive.org/cors/TafsirTabariShakir/taftab10_text.pdf",
+          "size": 16912692,
+          "quality": "scan"
+        }
+      ]
+    },
+    {
+      "id": "sahih-bukhari-ar",
+      "title": "صحيح البخاري",
+      "author": "الإمام البخاري",
+      "year": "",
+      "lang": "ar",
+      "tags": [
+        "hadith",
+        "حديث",
+        "صحيح البخاري",
+        "البخاري",
+        "хадис",
+        "хадисы",
+        "hadis"
+      ],
+      "page": "https://archive.org/details/Bukhari_201707",
+      "cover": "https://archive.org/services/img/Bukhari_201707",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/Bukhari_201707/Bukhari.pdf",
+          "size": 45304371,
+          "quality": "orig"
+        },
+        {
+          "fmt": "epub",
+          "label": "EPUB",
+          "url": "https://archive.org/cors/Bukhari_201707/Bukhari.epub",
+          "size": 4177429,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "arbaun-nawawiyya-ar",
+      "title": "الأربعون النووية",
+      "author": "الإمام النووي",
+      "year": "",
+      "lang": "ar",
+      "tags": [
+        "hadith",
+        "حديث",
+        "الأربعون النووية",
+        "النووي",
+        "хадис",
+        "сорок хадисов",
+        "hadis",
+        "arbain"
+      ],
+      "page": "https://archive.org/details/20210807",
+      "cover": "https://archive.org/services/img/20210807",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/20210807/%D8%A7%D9%84%D8%A3%D8%B1%D8%A8%D8%B9%D9%88%D9%86%20%D8%A7%D9%84%D9%86%D9%88%D9%88%D9%8A%D8%A9.pdf",
+          "size": 3054819,
+          "quality": "orig"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · مضغوط",
+          "url": "https://archive.org/cors/20210807/%D8%A7%D9%84%D8%A3%D8%B1%D8%A8%D8%B9%D9%88%D9%86%20%D8%A7%D9%84%D9%86%D9%88%D9%88%D9%8A%D8%A9_text.pdf",
+          "size": 588355,
+          "quality": "scan"
+        }
+      ]
+    },
+    {
+      "id": "ibn-hisham-sira-ru",
+      "title": "Жизнеописание Пророка Мухаммада",
+      "author": "Ибн Хишам",
+      "year": "",
+      "lang": "ru",
+      "tags": [
+        "сира",
+        "жизнеописание",
+        "пророк",
+        "мухаммад",
+        "ибн хишам",
+        "seerah",
+        "sira",
+        "السيرة"
+      ],
+      "page": "https://archive.org/details/20230914_20230914_1235",
+      "cover": "https://archive.org/services/img/20230914_20230914_1235",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/20230914_20230914_1235/%D0%98%D0%B1%D0%BD%20%D0%A5%D0%B8%D1%88%D0%B0%D0%BC%20-%20%D0%96%D0%B8%D0%B7%D0%BD%D0%B5%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%9F%D1%80%D0%BE%D1%80%D0%BE%D0%BA%D0%B0%20%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4%D0%B0.pdf",
+          "size": 1587270,
+          "quality": "orig"
+        },
+        {
+          "fmt": "epub",
+          "label": "EPUB",
+          "url": "https://archive.org/cors/20230914_20230914_1235/%D0%98%D0%B1%D0%BD%20%D0%A5%D0%B8%D1%88%D0%B0%D0%BC%20-%20%D0%96%D0%B8%D0%B7%D0%BD%D0%B5%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%9F%D1%80%D0%BE%D1%80%D0%BE%D0%BA%D0%B0%20%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4%D0%B0.epub",
+          "size": 1180828,
+          "quality": "orig"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/20230914_20230914_1235/%D0%98%D0%B1%D0%BD%20%D0%A5%D0%B8%D1%88%D0%B0%D0%BC%20-%20%D0%96%D0%B8%D0%B7%D0%BD%D0%B5%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%9F%D1%80%D0%BE%D1%80%D0%BE%D0%BA%D0%B0%20%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4%D0%B0_djvu.txt",
+          "size": 2254351,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "ibn-ishaq-sira-ru",
+      "title": "Жизнеописание Пророка Мухаммада (Сира)",
+      "author": "Мухаммад ибн Исхак",
+      "year": "",
+      "lang": "ru",
+      "tags": [
+        "сира",
+        "жизнеописание",
+        "пророк",
+        "мухаммад",
+        "ибн исхак",
+        "seerah",
+        "sira"
+      ],
+      "page": "https://archive.org/details/seera_202312",
+      "cover": "https://archive.org/services/img/seera_202312",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/seera_202312/Seera.pdf",
+          "size": 2029763,
+          "quality": "orig"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/seera_202312/Seera_djvu.txt",
+          "size": 2199454,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "koran-1790-ru",
+      "title": "Книга Аль-Коран. Часть I (издание 1790 года)",
+      "author": "пер. М. И. Верёвкина",
+      "year": "1790",
+      "lang": "ru",
+      "tags": [
+        "коран",
+        "аль-коран",
+        "перевод",
+        "quran",
+        "qur'on",
+        "القرآن"
+      ],
+      "page": "https://archive.org/details/Kniga-Al-Koran-Magometa-1-chast",
+      "cover": "https://archive.org/services/img/Kniga-Al-Koran-Magometa-1-chast",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/Kniga-Al-Koran-Magometa-1-chast/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0_%D0%90%D0%BB%D1%8C_%D0%9A%D0%BE%D1%80%D0%B0%D0%BD_%D0%90%D1%80%D0%B0%D0%B2%D0%BB.pdf",
+          "size": 16534696,
+          "quality": "scan"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/Kniga-Al-Koran-Magometa-1-chast/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0_%D0%90%D0%BB%D1%8C_%D0%9A%D0%BE%D1%80%D0%B0%D0%BD_%D0%90%D1%80%D0%B0%D0%B2%D0%BB_djvu.txt",
+          "size": 623473,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "koran-i-progress-ru",
+      "title": "Коран и прогресс",
+      "author": "Н. П. Остроумов",
+      "year": "1901",
+      "lang": "ru",
+      "tags": [
+        "коран",
+        "ислам",
+        "история",
+        "quran",
+        "القرآن"
+      ],
+      "page": "https://archive.org/details/koraniprogress65",
+      "cover": "https://archive.org/services/img/koraniprogress65",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/koraniprogress65/koraniprogress65.pdf",
+          "size": 9057793,
+          "quality": "scan"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/koraniprogress65/koraniprogress65_djvu.txt",
+          "size": 739725,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "quran-uzbek",
+      "title": "Qur’oni Karim — o‘zbekcha tarjima",
+      "author": "",
+      "year": "",
+      "lang": "uz",
+      "tags": [
+        "qur'on",
+        "quran",
+        "tafsir",
+        "коран",
+        "القرآن",
+        "o'zbek",
+        "uzbek"
+      ],
+      "page": "https://archive.org/details/HolyQuranUzbek",
+      "cover": "https://archive.org/services/img/HolyQuranUzbek",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/HolyQuranUzbek/Holy-Quran-Uzbek.pdf",
+          "size": 5214514,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "qisqa-hadislar-uz",
+      "title": "Qisqa hadislar",
+      "author": "Abdulloh",
+      "year": "",
+      "lang": "uz",
+      "tags": [
+        "hadis",
+        "hadith",
+        "хадисы",
+        "الحديث",
+        "o'zbek",
+        "uzbek"
+      ],
+      "page": "https://archive.org/details/qisqahadislar",
+      "cover": "https://archive.org/services/img/qisqahadislar",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/qisqahadislar/qisqa%20hadislar.pdf",
+          "size": 761100,
+          "quality": "orig"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/qisqahadislar/qisqa%20hadislar_djvu.txt",
+          "size": 39977,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "islom-haq-din-uz",
+      "title": "Islom haq din",
+      "author": "Abdurrahmon ibn Hammod Oli Umar",
+      "year": "",
+      "lang": "uz",
+      "tags": [
+        "islom",
+        "aqida",
+        "din",
+        "ислам",
+        "акыда",
+        "islam",
+        "العقيدة"
+      ],
+      "page": "https://archive.org/details/islom-haq-din-kitob",
+      "cover": "https://archive.org/services/img/islom-haq-din-kitob",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/islom-haq-din-kitob/islom-haq-din.pdf",
+          "size": 472868,
+          "quality": "orig"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/islom-haq-din-kitob/islom-haq-din_djvu.txt",
+          "size": 251018,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "riyad-us-salihin-ar",
+      "title": "رياض الصالحين",
+      "author": "الإمام النووي",
+      "year": "",
+      "lang": "ar",
+      "tags": [
+        "hadith",
+        "حديث",
+        "رياض الصالحين",
+        "النووي",
+        "сады праведных",
+        "хадис",
+        "hadis"
+      ],
+      "page": "https://archive.org/details/rsnawwy",
+      "cover": "https://archive.org/services/img/rsnawwy",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF · محقق",
+          "url": "https://archive.org/cors/rsnawwy/rs-mohaqaq.pdf",
+          "size": 15770224,
+          "quality": "orig"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/rsnawwy/rs_text.pdf",
+          "size": 15013797,
+          "quality": "scan"
+        }
+      ]
+    },
+    {
+      "id": "bulugh-al-maram-ar",
+      "title": "بلوغ المرام من أدلة الأحكام",
+      "author": "ابن حجر العسقلاني",
+      "year": "",
+      "lang": "ar",
+      "tags": [
+        "hadith",
+        "fiqh",
+        "حديث",
+        "بلوغ المرام",
+        "ابن حجر",
+        "хадис",
+        "фикх"
+      ],
+      "page": "https://archive.org/details/bensaoud_gmail_20170329_2301",
+      "cover": "https://archive.org/services/img/bensaoud_gmail_20170329_2301",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/bensaoud_gmail_20170329_2301/%D8%A8%D9%84%D9%88%D8%BA%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D9%85%20%D9%85%D9%86%20%D8%A3%D8%AF%D9%84%D8%A9%20%D8%A7%D9%84%D8%A3%D8%AD%D9%83%D8%A7%D9%85.pdf",
+          "size": 8401406,
+          "quality": "orig"
+        },
+        {
+          "fmt": "epub",
+          "label": "EPUB",
+          "url": "https://archive.org/cors/bensaoud_gmail_20170329_2301/%D8%A8%D9%84%D9%88%D8%BA%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D9%85%20%D9%85%D9%86%20%D8%A3%D8%AF%D9%84%D8%A9%20%D8%A7%D9%84%D8%A3%D8%AD%D9%83%D8%A7%D9%85_lcp.epub",
+          "size": 3377186,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "tafsir-ibn-kathir-ar",
+      "title": "تفسير ابن كثير",
+      "author": "ابن كثير",
+      "year": "",
+      "lang": "ar",
+      "tags": [
+        "tafsir",
+        "quran",
+        "تفسير",
+        "ابن كثير",
+        "القرآن",
+        "тафсир",
+        "коран"
+      ],
+      "page": "https://archive.org/details/tkather",
+      "cover": "https://archive.org/services/img/tkather",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 1",
+          "url": "https://archive.org/cors/tkather/tkather01_text.pdf",
+          "size": 18156776,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 2",
+          "url": "https://archive.org/cors/tkather/tkather02_text.pdf",
+          "size": 17847356,
+          "quality": "scan"
+        },
+        {
+          "fmt": "pdf",
+          "label": "PDF · الجزء 13",
+          "url": "https://archive.org/cors/tkather/tkather13_text.pdf",
+          "size": 18896885,
+          "quality": "scan"
+        }
+      ]
+    },
+    {
+      "id": "sady-pravednyh-ru",
+      "title": "Сады праведных",
+      "author": "Имам ан-Навави",
+      "year": "",
+      "lang": "ru",
+      "tags": [
+        "хадис",
+        "хадисы",
+        "сады праведных",
+        "навави",
+        "رياض الصالحين",
+        "hadis"
+      ],
+      "page": "https://archive.org/details/sady-pravednyh-annanawi-dumd",
+      "cover": "https://archive.org/services/img/sady-pravednyh-annanawi-dumd",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/sady-pravednyh-annanawi-dumd/sady-pravednyh-annanawi-dumd.pdf",
+          "size": 52629545,
+          "quality": "orig"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/sady-pravednyh-annanawi-dumd/sady-pravednyh-annanawi-dumd_djvu.txt",
+          "size": 3098390,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "sahih-muslim-ru",
+      "title": "«Сахих» имама Муслима: краткое изложение аль-Мунзири",
+      "author": "пер. Абдулла Нирша",
+      "year": "",
+      "lang": "ru",
+      "tags": [
+        "хадис",
+        "хадисы",
+        "сахих",
+        "муслим",
+        "صحيح مسلم",
+        "hadis"
+      ],
+      "page": "https://archive.org/details/sahih-muslim.nirsha",
+      "cover": "https://archive.org/services/img/sahih-muslim.nirsha",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/sahih-muslim.nirsha/sahih-muslim.nirsha.pdf",
+          "size": 8205441,
+          "quality": "orig"
+        },
+        {
+          "fmt": "epub",
+          "label": "EPUB",
+          "url": "https://archive.org/cors/sahih-muslim.nirsha/sahih-muslim.nirsha.epub",
+          "size": 4346516,
+          "quality": "orig"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/sahih-muslim.nirsha/sahih-muslim.nirsha_djvu.txt",
+          "size": 4397671,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "islom-nubtha-uz",
+      "title": "Ислом: қисқача илмий асар",
+      "author": "",
+      "year": "",
+      "lang": "uz",
+      "tags": [
+        "islom",
+        "ислом",
+        "aqida",
+        "акыда",
+        "дин",
+        "Қуръон",
+        "суннат"
+      ],
+      "page": "https://archive.org/details/uz-nubtha",
+      "cover": "https://archive.org/services/img/uz-nubtha",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/uz-nubtha/uz-nubtha.pdf",
+          "size": 1850011,
+          "quality": "orig"
+        },
+        {
+          "fmt": "txt",
+          "label": "TXT",
+          "url": "https://archive.org/cors/uz-nubtha/uz-nubtha_djvu.txt",
+          "size": 376562,
+          "quality": "orig"
+        }
+      ]
+    },
+    {
+      "id": "sunnat-va-hadis-uz",
+      "title": "Суннат ва ҳадис аҳли эътиқодининг асослари",
+      "author": "Носир ас-Сунна ал-Қураший",
+      "year": "",
+      "lang": "uz",
+      "tags": [
+        "ҳадис",
+        "hadis",
+        "суннат",
+        "aqida",
+        "акыда",
+        "ислом"
+      ],
+      "page": "https://archive.org/details/20251003_20251003_0957",
+      "cover": "https://archive.org/services/img/20251003_20251003_0957",
+      "files": [
+        {
+          "fmt": "pdf",
+          "label": "PDF",
+          "url": "https://archive.org/cors/20251003_20251003_0957/%D0%A1%D0%A3%D0%9D%D0%9D%D0%90%D0%A2%20%D0%92%D0%90%20%D2%B2%D0%90%D0%94%D0%98%D0%A1%20%D0%90%D2%B2%D0%9B%D0%98%20%D0%AD%D0%AA%D0%A2%D0%98%D2%9A%D0%9E%D0%94%D0%98%D0%9D%D0%98%D0%9D%D0%93.pdf",
+          "size": 504613,
+          "quality": "orig"
+        }
+      ]
+    }
+  ]
+}
