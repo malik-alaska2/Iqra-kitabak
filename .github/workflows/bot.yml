@@ -7,11 +7,10 @@ name: Run bot (fallback)
 
 on:
   workflow_dispatch:
-  # Расписание отключено: без секрета BOT_TOKEN запуск падал бы каждые 5 часов.
-  # Чтобы включить — добавьте секрет в Settings > Secrets and variables > Actions,
-  # затем раскомментируйте две строки ниже.
-  # schedule:
-  #   - cron: "0 */5 * * *"
+  # Автоперезапуск: GitHub сам стартует новый прогон каждые 5 часов.
+  # Нужен секрет BOT_TOKEN в Settings > Secrets and variables > Actions.
+  schedule:
+    - cron: "0 */5 * * *"
 
 concurrency:
   group: kitob-bot
